@@ -7,7 +7,6 @@
         </q-card-media>
 
         <q-card-title>
-          <q-rating slot="subtitle" v-model="stars" :max="5" />
           <div slot="right" class="row items-center">
             <q-icon name="place" /> 250 ft
           </div>
