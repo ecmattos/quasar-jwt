@@ -4,7 +4,8 @@ module.exports = function (ctx) {
   return {
     // app plugins (/src/plugins)
     plugins: [
-      'axios'
+      'axios',
+      'vuelidate'
     ],
     css: [
       'app.styl'
@@ -53,15 +54,14 @@ module.exports = function (ctx) {
     framework: {
       components: [
         'QLayout',
-        'QLayoutHeader',
-        'QLayoutDrawer',
         'QPageContainer',
         'QPage',
+        'QLayoutHeader',
+        'QLayoutFooter',
+        'QLayoutDrawer',
+        'QPageSticky',
         'QToolbar',
         'QToolbarTitle',
-        'QTabs',
-        'QTab',
-        'QRouteTab',
         'QBtn',
         'QIcon',
         'QList',
@@ -69,14 +69,26 @@ module.exports = function (ctx) {
         'QItem',
         'QItemMain',
         'QItemSide',
-        'QAjaxBar',
+        'QField',
+        'QInput',
+        'QSelect', 
+        'QDatetime',
+        'QChipsInput',
+
         'QCard',
+        'QCardTitle',
+        'QCardMain',
+        'QCardMedia',
         'QCardSeparator',
         'QCardActions',
-        'QInput',
-        'QPopover',
-        'QSelect',
-        'QOptionGroup'
+
+        'QTabs',
+        'QTab',
+        'QTabPane',
+        'QRouteTab',
+
+        'QInnerLoading',
+        'QSpinnerGears'
       ],
       directives: [
         'Ripple',
