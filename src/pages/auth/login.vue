@@ -5,16 +5,8 @@
         <!-- Notice the slot="overlay" -->
         <q-card-title>
           <q-card-media>
-            <img src="/statics/quasar-logo.png" style='max-width:100px; padding-top:10px; padding-bottom:10px'>
+            <img src="/assets/img/user_default.png" style="width: 400px; padding:25px">
           </q-card-media>
-
-          <div slot="right" class="row items-center">
-            <q-btn flat color="primary" label="Criar Conta" class="text-right"></q-btn>
-          </div>
-
-          <div slot="right" class="row items-center">
-            <q-btn flat color="primary" label="Esqueci a senha"></q-btn>
-          </div>
         </q-card-title>          
         
         <q-card-main />
