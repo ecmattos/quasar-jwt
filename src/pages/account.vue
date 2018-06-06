@@ -1,6 +1,5 @@
 <template>
   <q-page class="flex flex-center">
-
     <q-card inline style="width:500px; padding:30px">
       <q-list separator>
         <q-item>
@@ -24,28 +23,28 @@
 </style>
 
 <script>
-export default {
-  data () {
-    return {
-      form: {
-        first_name: this.$store.state.auth.User.firstName,
-        last_name: this.$store.state.auth.User.lastName,
-        username: this.$store.state.auth.User.userName,
-        email: this.$store.state.auth.User.email,
-        password: ''
+  export default {
+    data () {
+      return {
+        form: {
+          first_name: this.$store.state.auth.User.firstName,
+          last_name: this.$store.state.auth.User.lastName,
+          username: this.$store.state.auth.User.userName,
+          email: this.$store.state.auth.User.email,
+          password: ''
+        }
+      }
+    },
+    methods: {
+      save () {
+        this.axios.post('/auth/update', this.form)
+          .then((response) => {
+            this.$q.notify({message: 'Account updated ', timeout: 2000, color: 'positive'})
+          })
+          .catch((error) => {
+            this.$q.notify({message: 'Error: ' + error.response.data.error, timeout: 2000, color: 'negative'})
+          })
       }
     }
-  },
-  methods: {
-    save () {
-      this.axios.post('/auth/update', this.form)
-        .then((response) => {
-          this.$q.notify({message: 'Account updated ', timeout: 2000, color: 'positive'})
-        })
-        .catch((error) => {
-          this.$q.notify({message: 'Error: ' + error.response.data.error, timeout: 2000, color: 'negative'})
-        })
-    }
   }
-}
 </script>

@@ -88,7 +88,11 @@ module.exports = function (ctx) {
         'QRouteTab',
 
         'QInnerLoading',
-        'QSpinnerGears'
+        'QSpinnerGears',
+        'QPopover',
+
+        'QFab',
+        'QFabAction'
       ],
       directives: [
         'Ripple',
