@@ -6,6 +6,11 @@ export default [
     component: () => import('pages/auth/login')
   },
   {
+    path: '/register',
+    name: 'register',
+    component: () => import('pages/auth/register')
+  },
+  {
     path: '/',
     component: () => import('layouts/default'),
     meta: {auth: true},

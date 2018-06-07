@@ -1,80 +1,90 @@
 <template>
   <div class="fixed fixed-center bg-grey-1 text-white">
-    <form id="form" v-on:submit.prevent="onSubmit()">
-      <q-card square class="flex-center text-center" style="width: 400px; padding:25px">
-        <!-- Notice the slot="overlay" -->
-        <q-card-title>
-          <q-card-media>
-            <img src="/statics/quasar-logo.png" style='max-width:100px; padding-top:10px; padding-bottom:10px'>
-          </q-card-media>
-
-          <div slot="right" class="row items-center">
-            <q-btn flat color="primary" label="Criar Conta" class="text-right"></q-btn>
-          </div>
-
-          <div slot="right" class="row items-center">
-            <q-btn flat color="primary" label="Esqueci a senha"></q-btn>
-          </div>
-        </q-card-title>          
+    <q-card square class="flex-center text-center" style="width: 400px; padding:25px">
+      <!-- Notice the slot="overlay" -->
+      <q-card-title>
+        <q-card-media>
+          <img src="/assets/img/user_default.png" style="width: 400px; padding:25px">
+        </q-card-media>
+      </q-card-title>          
         
-        <q-card-main />
-          <p class="text-primary">Informe suas Credenciais</p>
-          <div class="text-left">
-            <q-field
-              icon="mail"
-              :error="$v.form.email.$error"
-              error-label="Forneça um e-mail válido"
-            >
-              <q-input
-                float-label="E-mail"
-                v-model="form.email"
-                @blur="$v.form.email.$touch"
-              />
-            </q-field>
+      <q-card-main />
+        <p class="text-primary">NOVA CONTA</p>
+        <div class="text-left">
+          <q-field
+            icon="mail"
+            :error="$v.email.$error"
+            error-label="Forneça um e-mail válido"
+          >
+            <q-input
+              float-label="E-mail"
+              v-model="email"
+              @blur="$v.email.$touch"
+            />
+          </q-field>
             
-            <br>
+          <br>
 
-            <q-field
-              icon="lock"
-              :error="$v.form.password.$error"
-              error-label="Obrigatório"
-            >
-              <q-input
-                float-label="Senha"
-                type="password"
-                v-model="form.password"
-                @blur="$v.form.password.$touch"
-                @keyup.enter="submit"
-              />
-            </q-field>
+          <q-field
+            icon="lock"
+            :error="$v.password.$error"
+            error-label="Obrigatório"
+          >
+            <q-input
+              float-label="Senha"
+              type="password"
+              v-model="password"
+              @blur="$v.password.$touch"
+              @keyup.enter="submit"
+            />
+          </q-field>
 
-            <br>
+          <br>
 
-            <q-btn 
-              :percentage="percentage"
-              :loading="loading"
-              class="fit"
-              color="primary"
-              label="Entrar">
+          <q-field
+            icon="lock"
+            :error="$v.confirmPassword.$error"
+            error-label="Obrigatório"
+          >
+            <q-input
+              float-label="Confirmar Senha"
+              type="password"
+              v-model="password"
+              @blur="$v.password.$touch"
+              @click="onSubmit()"
+            />
+          </q-field>
 
-              <span slot="loading">
-                <q-spinner-gears class="on-left" />
-                Verificando...
-              </span>
-            </q-btn>
-            <br>
-          </div>
-        </q-card-main>
+          <br>
 
-        <q-card-separator />
+          <q-btn 
+            :percentage="percentage"
+            :loading="loading"
+            class="fit"
+            color="primary"
+            label="Entrar"
+            @click="onSubmit()"
+          >
+            <span slot="loading">
+              <q-spinner-gears class="on-left" />
+              Verificando...
+            </span>
+          </q-btn>
+  
+          <br>
+        </div>
+      </q-card-main>
+  
+      <q-card-separator />
 
-        <q-card-actions>
-          <q-card-media>
-            <img src="/statics/quasar-logo.png" style='max-width:50px; padding-top:10px; padding-bottom:10px'>
-          </q-card-media>
-        </q-card-actions>
-      </q-card>
-    </form>
+      <q-card-actions>
+        <q-card-media>
+          <img src="/statics/quasar-logo.png" style='max-width:50px; padding-top:10px; padding-bottom:10px'>
+        </q-card-media>
+        <q-btn flat color="primary" label="Criar Conta" class="text-right" @click="$router.replace('/register')"></q-btn>
+        <q-btn flat color="primary" label="Esqueci a senha"></q-btn>
+      </q-card-actions>
+    </q-card>
   </div>
 </template>
 
@@ -82,35 +92,35 @@
 </style>
 
 <script>
-  import { required, email } from 'vuelidate/lib/validators'
+  import { required, email, sameAS, minLength } from 'vuelidate/lib/validators'
 
   export default {
     data () {
       return {
-        form: {
-          email: '',
-          password: ''
-        },
+        email: '',
+        password: '',
         loading: false,
         percentage: 0,
         submitStatus: null
       }
     },
     validations: {
-      form: {
-        email: {
-          required,
-          email
-        },
-        password: {
-          required
-        }
+      email: {
+        required,
+        email
+      },
+      password: {
+        required,
+        minLength: minLength(6)
+      },
+      confirmPassword: {
+        sameAsPassword: sameAS('password')
       }
     },
     methods: {
       onSubmit () {
-        this.$v.form.$touch()
-        if (this.$v.form.$error) {
+        this.$v.$touch()
+        if (this.$v.$error) {
           this.$q.notify({
             message: 'Ops... encontramos alguns problemas !',
             icon: 'warning',

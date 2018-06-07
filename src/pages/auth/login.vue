@@ -1,6 +1,5 @@
 <template>
   <div class="fixed fixed-center bg-grey-1 text-white">
-    <form id="form" v-on:submit.prevent="onSubmit()">
       <q-card square class="flex-center text-center" style="width: 400px; padding:25px">
         <!-- Notice the slot="overlay" -->
         <q-card-title>
@@ -14,13 +13,13 @@
           <div class="text-left">
             <q-field
               icon="mail"
-              :error="$v.form.email.$error"
+              :error="$v.email.$error"
               error-label="Forneça um e-mail válido"
             >
               <q-input
                 float-label="E-mail"
-                v-model="form.email"
-                @blur="$v.form.email.$touch"
+                v-model="email"
+                @blur="$v.email.$touch"
               />
             </q-field>
             
@@ -28,15 +27,14 @@
 
             <q-field
               icon="lock"
-              :error="$v.form.password.$error"
+              :error="$v.password.$error"
               error-label="Obrigatório"
             >
               <q-input
                 float-label="Senha"
                 type="password"
-                v-model="form.password"
-                @blur="$v.form.password.$touch"
-                @keyup.enter="submit"
+                v-model="password"
+                @blur="$v.password.$touch"
               />
             </q-field>
 
@@ -47,7 +45,8 @@
               :loading="loading"
               class="fit"
               color="primary"
-              label="Entrar">
+              label="Entrar"
+              @click="onSubmit()">
 
               <span slot="loading">
                 <q-spinner-gears class="on-left" />
@@ -64,11 +63,11 @@
           <q-card-media>
             <img src="/statics/quasar-logo.png" style='max-width:50px; padding-top:10px; padding-bottom:10px'>
           </q-card-media>
-          <q-btn flat color="primary" label="Criar Conta" class="text-right"></q-btn>
+          <q-btn flat color="primary" label="Criar Conta" class="text-right" @click="$router.replace('/register')"></q-btn>
           <q-btn flat color="primary" label="Esqueci a senha"></q-btn>
         </q-card-actions>
       </q-card>
-    </form>
+    
   </div>
 </template>
 
@@ -76,35 +75,33 @@
 </style>
 
 <script>
-  import { required, email } from 'vuelidate/lib/validators'
+  import { required, email, minLength } from 'vuelidate/lib/validators'
 
   export default {
     data () {
       return {
-        form: {
-          email: '',
-          password: ''
-        },
+        email: '',
+        password: '',
         loading: false,
         percentage: 0,
         submitStatus: null
       }
     },
     validations: {
-      form: {
-        email: {
-          required,
-          email
-        },
-        password: {
-          required
-        }
+      email: {
+        required,
+        email
+      },
+      password: {
+        required,
+        minLength: minLength(6)
       }
     },
     methods: {
       onSubmit () {
-        this.$v.form.$touch()
-        if (this.$v.form.$error) {
+        console.log(this.$v.$touch());
+        this.$v.$touch()
+        if (this.$v.$error) {
           this.$q.notify({
             message: 'Ops... encontramos alguns problemas !',
             icon: 'warning',
