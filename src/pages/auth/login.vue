@@ -100,7 +100,7 @@
     computed: {
       errorMsgEmail() {
         if (!this.$v.email.required) return 'Obrigatório.'
-        if (!this.$v.password.email) return `Inválido.`
+        if (!this.$v.email.email) return `Inválido.`
       },
       errorMsgPassword() {
         if (!this.$v.password.required) return 'Obrigatório.'
