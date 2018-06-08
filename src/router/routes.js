@@ -3,12 +3,12 @@ export default [
   {
     path: '/login',
     name: 'login',
-    component: () => import('pages/auth/login')
+    component: () => import('pages/auth/Login')
   },
   {
     path: '/register',
     name: 'register',
-    component: () => import('pages/auth/register')
+    component: () => import('pages/auth/Register')
   },
   {
     path: '/',

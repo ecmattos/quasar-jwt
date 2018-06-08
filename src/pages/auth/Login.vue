@@ -18,7 +18,7 @@
             >
               <q-input
                 float-label="E-mail"
-                v-model="credentials.email"
+                v-model.trim="credentials.email"
                 autofocus="true"
                 @blur="$v.credentials.email.$touch"
               />
@@ -34,7 +34,7 @@
               <q-input
                 float-label="Senha"
                 type="password"
-                v-model="credentials.password"
+                v-model.tri="credentials.password"
                 @blur="$v.credentials.password.$touch"
               />
             </q-field>
@@ -64,7 +64,7 @@
           <q-card-media>
             <img src="/statics/quasar-logo.png" style='max-width:50px; padding-top:10px; padding-bottom:10px'>
           </q-card-media>
-          <q-btn flat color="primary" label="Criar Conta" class="text-right" @click="$router.replace('/register')"></q-btn>
+          <q-btn flat color="primary" label="Criar Conta" class="text-right" @click="$router.replace('register')"></q-btn>
           <q-btn flat color="primary" label="Esqueci a senha"></q-btn>
         </q-card-actions>
       </q-card>
