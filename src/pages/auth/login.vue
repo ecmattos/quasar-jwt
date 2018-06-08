@@ -3,13 +3,13 @@
       <q-card square class="flex-center text-center" style="width: 400px; padding:25px">
         <!-- Notice the slot="overlay" -->
         <q-card-title>
+          <p class="text-primary">Informe suas Credenciais</p>
           <q-card-media>
             <img src="/assets/img/user_default.png" style="width: 400px; padding:25px">
           </q-card-media>
         </q-card-title>          
         
         <q-card-main />
-          <p class="text-primary">Informe suas Credenciais</p>
           <div class="text-left">
             <q-field
               icon="mail"
