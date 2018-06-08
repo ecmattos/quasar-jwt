@@ -14,7 +14,7 @@
             <q-field
               icon="mail"
               :error="$v.email.$error"
-              error-label="Forneça um e-mail válido"
+              :error-label="errorMsgEmail"
             >
               <q-input
                 float-label="E-mail"
@@ -28,7 +28,7 @@
             <q-field
               icon="lock"
               :error="$v.password.$error"
-              error-label="Obrigatório"
+              :error-label="errorMsgPassword"
             >
               <q-input
                 float-label="Senha"
@@ -97,9 +97,18 @@
         minLength: minLength(6)
       }
     },
+    computed: {
+      errorMsgEmail() {
+        if (!this.$v.email.required) return 'Obrigatório.'
+        if (!this.$v.password.email) return `Inválido.`
+      },
+      errorMsgPassword() {
+        if (!this.$v.password.required) return 'Obrigatório.'
+        if (!this.$v.password.minLength) return `Mínimo ${this.$v.password.$params.minLength.min} caracteres.`
+      }
+    },
     methods: {
-      onSubmit () {
-        console.log(this.$v.$touch());
+      onSubmit() {
         this.$v.$touch()
         if (this.$v.$error) {
           this.$q.notify({
