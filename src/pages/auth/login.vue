@@ -19,6 +19,7 @@
               <q-input
                 float-label="E-mail"
                 v-model="email"
+                autofocus="true"
                 @blur="$v.email.$touch"
               />
             </q-field>
