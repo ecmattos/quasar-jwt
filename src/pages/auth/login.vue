@@ -13,14 +13,14 @@
           <div class="text-left">
             <q-field
               icon="mail"
-              :error="$v.email.$error"
+              :error="$v.credentials.email.$error"
               :error-label="errorMsgEmail"
             >
               <q-input
                 float-label="E-mail"
-                v-model="email"
+                v-model="credentials.email"
                 autofocus="true"
-                @blur="$v.email.$touch"
+                @blur="$v.credentials.email.$touch"
               />
             </q-field>
             
@@ -28,14 +28,14 @@
 
             <q-field
               icon="lock"
-              :error="$v.password.$error"
+              :error="$v.credentials.password.$error"
               :error-label="errorMsgPassword"
             >
               <q-input
                 float-label="Senha"
                 type="password"
-                v-model="password"
-                @blur="$v.password.$touch"
+                v-model="credentials.password"
+                @blur="$v.credentials.password.$touch"
               />
             </q-field>
 
@@ -81,37 +81,41 @@
   export default {
     data () {
       return {
-        email: '',
-        password: '',
+        credentials: {
+          email: '',
+          password: ''
+        },
         loading: false,
         percentage: 0,
         submitStatus: null
       }
     },
     validations: {
-      email: {
-        required,
-        email
-      },
-      password: {
-        required,
-        minLength: minLength(6)
+      credentials: {
+        email: {
+          required,
+          email
+        },
+        password: {
+          required,
+          minLength: minLength(6)
+        }
       }
     },
     computed: {
       errorMsgEmail() {
-        if (!this.$v.email.required) return 'Obrigatório.'
-        if (!this.$v.email.email) return `Inválido.`
+        if (!this.$v.credentials.email.required) return 'Obrigatório.'
+        if (!this.$v.credentials.email.email) return `Inválido.`
       },
       errorMsgPassword() {
-        if (!this.$v.password.required) return 'Obrigatório.'
-        if (!this.$v.password.minLength) return `Mínimo ${this.$v.password.$params.minLength.min} caracteres.`
+        if (!this.$v.credentials.password.required) return 'Obrigatório.'
+        if (!this.$v.credentials.password.minLength) return `Mínimo ${this.$v.credentials.password.$params.minLength.min} caracteres.`
       }
     },
     methods: {
       onSubmit() {
-        this.$v.$touch()
-        if (this.$v.$error) {
+        this.$v.credentials.$touch()
+        if (this.$v.credentials.$error) {
           this.$q.notify({
             message: 'Ops... encontramos alguns problemas !',
             icon: 'warning',
