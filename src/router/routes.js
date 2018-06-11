@@ -10,6 +10,11 @@ export default [
     component: () => import('pages/auth/register')
   },
   {
+    path: '/forgot',
+    name: 'forgot',
+    component: () => import('pages/auth/password')
+  },
+  {
     path: '/',
     component: () => import('layouts/default'),
     meta: {auth: true},

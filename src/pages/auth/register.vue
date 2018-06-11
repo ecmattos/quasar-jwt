@@ -1,89 +1,88 @@
 <template>
   <div class="fixed fixed-center bg-grey-1 text-white">
-      <q-card square class="flex-center text-center" style="width: 400px; padding:25px">
-        <!-- Notice the slot="overlay" -->
-        <q-card-title>
-          <p class="text-primary">NOVA CONTA</p>
-          <q-card-media>
-            <img src="/assets/img/user_default.png" style="width: 400px; padding:25px">
-          </q-card-media>
-        </q-card-title>          
+    <q-card square class="flex-center text-center" style="width: 400px; padding:25px">
+      <!-- Notice the slot="overlay" -->
+      <q-card-title>
+        <p class="text-primary">NOVA CONTA</p>
+        <q-card-media>
+          <img src="/assets/img/user_default.png" style="width: 400px; padding:25px">
+        </q-card-media>
+      </q-card-title>          
         
-        <q-card-main />
-          <div class="text-left">
-            <q-field
-              icon="mail"
+      <q-card-main />
+        <div class="text-left">
+          <q-field
+            icon="mail"
+            :error-label="errorMsgEmail"
+          >
+            <q-input
+              float-label="E-mail"
+              v-model.trim="register.email"
+              autofocus="true"
               :error="$v.register.email.$error"
-              :error-label="errorMsgEmail"
-            >
-              <q-input
-                float-label="E-mail"
-                v-model.trim="register.email"
-                autofocus="true"
-                @blur="$v.register.email.$touch"
-              />
-            </q-field>
+              @blur="$v.register.email.$touch"
+            />
+          </q-field>
             
-            <br>
+          <br>
 
-            <q-field
-              icon="lock"
+          <q-field
+            icon="lock"
+            :error-label="errorMsgPassword"
+          >
+            <q-input
+              float-label="Senha"
+              type="password"
+              v-model.trim="register.password"
               :error="$v.register.password.$error"
-              :error-label="errorMsgPassword"
-            >
-              <q-input
-                float-label="Senha"
-                type="password"
-                v-model.trim="register.password"
-                @blur="$v.register.password.$touch"
-              />
-            </q-field>
+              @blur="$v.register.password.$touch"
+            />
+          </q-field>
 
-            <br>
+          <br>
 
-            <q-field
-              icon="lock"
+          <q-field
+            icon="lock"
+            :error-label="errorMsgRepeatPassword"
+          >
+            <q-input
+              float-label="Repetir Senha"
+              type="password"
+              v-model.trim="register.repeatPassword"
               :error="$v.register.repeatPassword.$error"
-              :error-label="errorMsgRepeatPassword"
-            >
-              <q-input
-                float-label="Repetir Senha"
-                type="password"
-                v-model.trim="register.password"
-                @blur="$v.register.password.$touch"
-              />
-            </q-field>
+              @blur="$v.register.repeatPassword.$touch"
+            />
+          </q-field>
 
-            <br>
+          <br>
 
-            <q-btn 
-              :percentage="percentage"
-              :loading="loading"
-              class="fit"
-              color="primary"
-              label="Entrar"
-              @click="onSubmit()">
+          <q-btn 
+            :percentage="percentage"
+            :loading="loading"
+            class="fit"
+            color="primary"
+            label="Entrar"
+            @click="onSubmit()">
 
-              <span slot="loading">
-                <q-spinner-gears class="on-left" />
-                Verificando...
-              </span>
-            </q-btn>
-            <br>
-          </div>
-        </q-card-main>
+            <span slot="loading">
+              <q-spinner-gears class="on-left" />
+              Verificando...
+            </span>
+          </q-btn>
+          <br>
+        </div>
+      </q-card-main>
 
-        <q-card-separator />
+      <q-card-separator />
 
-        <q-card-actions>
-          <q-card-media>
-            <img src="/statics/quasar-logo.png" style='max-width:50px; padding-top:10px; padding-bottom:10px'>
-          </q-card-media>
-          <q-btn flat color="primary" label="Criar Conta" class="text-right" @click="$router.replace('/register')"></q-btn>
-          <q-btn flat color="primary" label="Esqueci a senha"></q-btn>
-        </q-card-actions>
-      </q-card>
-    {{ $v }}
+      <q-card-actions>
+        <q-card-media>
+          <img src="/statics/quasar-logo.png" style='max-width:50px; padding-top:10px; padding-bottom:10px'>
+        </q-card-media>
+        <q-btn flat color="primary" label="Criar Conta" class="text-right" @click="$router.replace('/register')"></q-btn>
+        <q-btn flat color="primary" label="Esqueci a senha"></q-btn>
+      </q-card-actions>
+    </q-card>
   </div>
 </template>
 
@@ -91,7 +90,7 @@
 </style>
 
 <script>
-  import { required, email, sameAS, minLength } from 'vuelidate/lib/validators'
+  import { required, email, sameAs, minLength } from 'vuelidate/lib/validators'
 
   export default {
     data () {
@@ -117,7 +116,8 @@
           minLength: minLength(6)
         },
         repeatPassword: {
-          sameAsPassword: sameAS('password')
+          required,
+          sameAsPassword: sameAs('password')
         }
       }
     },
@@ -133,7 +133,6 @@
       errorMsgRepeatPassword() {
         if (!this.$v.register.repeatPassword.required) return 'Obrigatório.'
         if (!this.$v.register.repeatPassword.sameAsPassword) return 'Senhas diferentes.'
-        if (!this.$v.register.repeatPassword.minLength) return `Mínimo ${this.$v.register.repeatPassword.$params.minLength.min} caracteres.`
       }
     },
     methods: {

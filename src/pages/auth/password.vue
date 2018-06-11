@@ -3,7 +3,7 @@
     <q-card square class="flex-center text-center" style="width: 400px; padding:25px">
       <!-- Notice the slot="overlay" -->
       <q-card-title>
-        <p class="text-primary">Informe suas Credenciais</p>
+        <p class="text-primary">Esqueci a senha</p>
         <q-card-media>
           <img src="/assets/img/user_default.png" style="width: 400px; padding:25px">
         </q-card-media>
@@ -17,28 +17,13 @@
           >
             <q-input
               float-label="E-mail"
-              type="text"
-              v-model.trim="credentials.email"
-              :error="$v.credentials.email.$error"
-              @blur="$v.credentials.email.$touch"
+              v-model.trim="form.email"
+              autofocus="true"
+              :error="$v.form.email.$error"
+              @blur="$v.form.email.$touch"
             />
           </q-field>
             
-          <br>
-
-          <q-field
-            icon="lock"
-            :error-label="errorMsgPassword"
-          >
-            <q-input
-              float-label="Senha"
-              type="password"
-              v-model.tri="credentials.password"
-              :error="$v.credentials.password.$error"
-              @blur="$v.credentials.password.$touch"
-            />
-          </q-field>
-
           <br>
 
           <q-btn 
@@ -64,8 +49,8 @@
         <q-card-media>
           <img src="/statics/quasar-logo.png" style='max-width:50px; padding-top:10px; padding-bottom:10px'>
         </q-card-media>
-        <q-btn flat color="primary" label="Criar Conta" class="text-right" @click="$router.replace('/register')"></q-btn>
-        <q-btn flat color="primary" label="Esqueci a senha" @click="$router.replace('/forgot')"></q-btn>
+        <q-btn flat color="primary" label="Criar Conta" class="text-right" @click="$router.replace('/form')"></q-btn>
+        <q-btn flat color="primary" label="Esqueci a senha"></q-btn>
       </q-card-actions>
     </q-card>
   </div>
@@ -75,14 +60,13 @@
 </style>
 
 <script>
-  import { required, email, minLength } from 'vuelidate/lib/validators'
+  import { required, email } from 'vuelidate/lib/validators'
 
   export default {
     data () {
       return {
-        credentials: {
-          email: '',
-          password: ''
+        form: {
+          email: ''
         },
         loading: false,
         percentage: 0,
@@ -90,31 +74,23 @@
       }
     },
     validations: {
-      credentials: {
+      form: {
         email: {
           required,
           email
-        },
-        password: {
-          required,
-          minLength: minLength(6)
         }
       }
     },
     computed: {
       errorMsgEmail() {
-        if (!this.$v.credentials.email.required) return 'Obrigatório.'
-        if (!this.$v.credentials.email.email) return `Inválido.`
-      },
-      errorMsgPassword() {
-        if (!this.$v.credentials.password.required) return 'Obrigatório.'
-        if (!this.$v.credentials.password.minLength) return `Mínimo ${this.$v.credentials.password.$params.minLength.min} caracteres.`
+        if (!this.$v.form.email.required) return 'Obrigatório.'
+        if (!this.$v.form.email.email) return `Inválido.`
       }
     },
     methods: {
       onSubmit() {
-        this.$v.credentials.$touch()
-        if (this.$v.credentials.$error) {
+        this.$v.form.$touch()
+        if (this.$v.form.$error) {
           this.$q.notify({
             message: 'Ops... encontramos alguns problemas !',
             icon: 'warning',
